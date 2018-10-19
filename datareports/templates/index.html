@@ -1,0 +1,46 @@
+
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<title>DataReport Example</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/node_modules/tablesorter/dist/css/theme.bootstrap_4.min.css">
+    <script src="/node_modules/@fortawesome/fontawesome-free/css/all.min.css"></script>
+    <link rel="stylesheet" href="/media/data-report/data-report.css" />
+	<style>
+	</style>
+</head>
+<body>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <main role="main" class="col-md-10 col-lg-10 mx-auto pt-5 px-4">
+          <div class="data-report-message"></div>
+          <h2 class="data-report-heading"></h2>
+          <!-- all the magic happens here -->
+          <div class="data-report-example table-responsive"></div>
+        </main>
+      </div>
+    </div>
+	
+	
+  <script src="/node_modules/@fortawesome/fontawesome-free/js/all.js"></script>
+  <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/node_modules/popper.js-lite/dist/popper.min.js"></script>
+  <script src="/node_modules/tablesorter/dist/js/jquery.tablesorter.min.js"></script>
+  <script src="/node_modules/tablesorter/dist/js/extras/jquery.tablesorter.pager.min.js"></script>
+  <script src="/node_modules/tablesorter/dist/js/jquery.tablesorter.widgets.min.js"></script>
+  
+  <script src="/media/data-report/data-report.js"></script>
+  		
+	<script>
+	   $(".data-report-example").datareport({'uid':'example_data_report'});
+	</script>
+</body>
+</html>
