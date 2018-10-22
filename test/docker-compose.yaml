@@ -1,0 +1,13 @@
+
+version: '3'
+services:
+  db:
+    image: 'mariadb:latest'
+    container_name: datareports-db_1
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - 3305:3306
+    volumes:
+    - ./:/docker-entrypoint-initdb.d  

@@ -2,6 +2,7 @@
 A python/jquery/mysql stack for paginated tabular data over webapi.
 
 
+
 ## python install
 ```
 pipenv install datareports
@@ -50,6 +51,11 @@ property:
 - width                  # The pixel width of the table field in the UI
 ```
 
+#python environment variables
+- DATA_REPORT_DB_USER='datareports_user'
+- DATA_REPORT_DB_PASS='datareports_password'
+- DATA_REPORT_DB_HOST='localhost:3306'
+- DATA_REPORT_DB_NAME='datareports_test'
 
 ## Python Use
 ```
@@ -83,6 +89,11 @@ data_report_configs['example_1']={
             { 'name': 'loc'     , 'display': 'Location','ordinal': 5, 'visible': True , 'search': True , 'multi_search': True , 'sortable': True , 'default_sort': False, 'default_sort_asc': False, 'default_sort_ordinal': 0, 'width': 50  },
         ] }
  
+#set environment variables for DB
+os.environ['DATA_REPORT_DB_USER']='datareports_user'
+os.environ['DATA_REPORT_DB_PASS']='datareports_password'
+os.environ['DATA_REPORT_DB_HOST']='localhost:3306'
+os.environ['DATA_REPORT_DB_NAME']='datareports_test'
 
 if __name__ == "__main__":
     app.run()

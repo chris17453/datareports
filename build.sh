@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo "Attempting to build NPM and PyPi packages"
 
 echo "Remove old images"
@@ -11,6 +12,10 @@ git add -A
 
 echo "Bumping Python patch version"
 bumpversion patch --allow-dirty
+if [[ $? -ne 0 ]]; then
+    echo "in the wrong env?"
+    exit 1
+fi
 
 echo "Build the package"
 python setup.py sdist

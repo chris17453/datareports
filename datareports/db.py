@@ -24,19 +24,13 @@ def connect():
     #if True == missing_vars:
     #    return None
 
-    #mysql_config = {
-    #    'user'     : os.environ.get('DATA_REPORT_DB_USER') ,
-    #    'password' : os.environ.get('DATA_REPORT_DB_PASS') ,
-    #    'host'     : os.environ.get('DATA_REPORT_DB_HOST') ,
-    #    'database' : os.environ.get('DATA_REPORT_DB_NAME') 
-    #}
-
     mysql_config = {
-        'user'     : 'scap-web-user',
-        'password' : 'scap-web-password',
-        'host'     : '10.50.124.70',
-        'database' : 'scap-web-db',
+        'user'     : os.environ.get('DATA_REPORT_DB_USER') ,
+        'password' : os.environ.get('DATA_REPORT_DB_PASS') ,
+        'host'     : os.environ.get('DATA_REPORT_DB_HOST') ,
+        'database' : os.environ.get('DATA_REPORT_DB_NAME') 
     }
+
     connect_string = "mysql+pymysql://{}:{}@{}/{}?charset=utf8mb4".format( mysql_config['user'],
                                                                            mysql_config['password'],
                                                                            mysql_config['host'],

@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='datareports',
-    version='1.1.63',
+    version='1.1.67',
     packages=['datareports',],
     include_package_data=True,
     url='https://github.com/chris17453/datareports/',
