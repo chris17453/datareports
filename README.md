@@ -22,7 +22,6 @@ npm install datareports
 
 ## json configuration description
 ```
-# ##
 name          # The internal name of this report
 display       # The Displayed name of this report (html H1 Title)
 entity        # The company / division / entity  that owns this report ( Future use for report segregation)
@@ -30,9 +29,10 @@ group         # The group that this report falls in (Future use, menu generation
 ordinal       # The sort weight of this (Future Use for internal menu generation)
 uid           # The unique ID of this report. All reports are looked up via this field
 multi_search  # can multiple columns/properties be searched vi the global search field
-active'       # is this report active, if not it cannot be seenor used
-query'        # The manual query for the default data collection of this report
-properties:   # An array of property[] This is the core structure definition
+active        # is this report active, if not it cannot be seenor used
+query         # The manual query for the default data collection of this report
+properties    # An array of property[] This is the core structure definition
+
 
 ###
 ---
