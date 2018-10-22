@@ -12,10 +12,10 @@ npm install datareports
 
 ## jQuery Plugin Configuration
 ```
-    <link rel="stylesheet" href="/node_modules/tablesorter/dist/datareports/css/datareports.css" />
-    <script src="/node_modules/tablesorter/dist/datareports/js/datareports.js"></script>
+    <link rel="stylesheet" href="/node_modules/datareports/dist/css/datareports.css" />
+    <script src="/node_modules/datareports/dist/js/datareports.js"></script>
     <script>
-        $(".data-report-html-element-container").datareports({'uid':'example_1'}); //the UID used in the python definition...
+        $(".data-report").datareports({'uid':'example_1'}); //the UID used in the python definition...
     </script>
 ```
 
