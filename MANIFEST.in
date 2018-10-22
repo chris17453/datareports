@@ -1,2 +1,4 @@
-include node_modules/*
-include media/*
+include README.rst
+include docs/*.md
+recursive-include datareports/templates *
+recursive-include datareports/static *

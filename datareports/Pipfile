@@ -12,6 +12,7 @@ sqlalchemy = "*"
 pyyaml = "*"
 jsonpickle = "*"
 pip = "==18"
+pymysql = "*"
 
 [requires]
 python_version = "2.7"

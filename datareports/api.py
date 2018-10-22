@@ -37,8 +37,7 @@ def config():
 
     if None is not report:
         ds=DataReport(json=report)
-        config=ds.get_config()
-        json_data = jsonpickle.encode(config, unpicklable=False)
+        json_data = jsonpickle.encode(ds, unpicklable=False)
         return json_data
     else:
         return "{msg:'Error'}"

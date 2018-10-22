@@ -83,6 +83,7 @@ class DataReport:
         p.width = width
         p.max_width = width
         p.min_width = width
+        p.visible =visible
         p.overflow = False
         p.filter = filter
         p.multi_search = multi_search
@@ -98,7 +99,6 @@ class DataReport:
         p.default = None
         p.is_array = False
         p.has_default = False
-        p.visible = visible
         p.fixed_width = None
         #p.export = None
         #p.options = None

@@ -11,8 +11,3 @@ def index():
 @api.route('/node_modules/<path:path>')
 def send_js(path):
     return send_from_directory('node_modules', path)
-
-
-@api.route('/media/<path:path>')
-def send_media(path):
-     return send_from_directory('media', path)
