@@ -6,8 +6,11 @@ cd dist
 rm *.gz -f
 cd ..
 
+echo "Adding git changes"
+git add -A 
+
 echo "Bumping Python patch version"
-bump -p
+bumpversion patch --allow-dirty
 
 echo "Build the package"
 python setup.py sdist

@@ -3,12 +3,12 @@ from setuptools import setup
 
 setup(
     name='datareports',
-    version='1.1.57',
+    version='1.1.62',
     packages=['datareports',],
     include_package_data=True,
     url='https://github.com/chris17453/datareports/',
     license='Creative Commons Attribution-Noncommercial-Share Alike license',
-    long_description=open('README.txt').read(),
+    long_description=open('README.md').read(),
     summary= 'Python backend for tablesorter',
     author= 'Charles Watkins',
     author_email= 'charles@titandws.com',
