@@ -1,6 +1,6 @@
 {
   "name": "datareports",
-  "version": "0.1.67",
+  "version": "1.1.71",
   "description": "DataReports Front UI",
   "main": "index.html",
   "scripts": {

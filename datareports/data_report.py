@@ -4,6 +4,7 @@ from data_report_property import DataReportProperty
 from data_report_stats import DataReportStats
 from data_report_results import DataReportResults
 import db
+from sqlalchemy import exc
 
 
 class DataReport:
@@ -152,13 +153,13 @@ class DataReport:
             for i in request['filter']:
                 if i[0] < len(self.properties):
                     where_and.append(
-                        "`"+self.properties[i[0]].name+"`"+" LIKE '"+i[1]+"%' ")
+                        "`"+self.properties[i[0]].name+"`"+" LIKE '"+i[1]+"%%' ")
 
         if "" != request['multi_search']:
             for p in self.properties:
                 if True == p.multi_search:
                     where.append("`"+p.name+"`"+" LIKE '" +
-                                 request['multi_search']+"%' ")
+                                 request['multi_search']+"%%' ")
 
         if 0 < len(where) or  0< len(where_and):
             if 0 < len(where):
@@ -178,14 +179,16 @@ class DataReport:
         {2}
         {3}""".format(self.query,where_clause, order_by, limit)
 
+        count = "SELECT count(*) FROM (SELECT * FROM ({0}) AS WRAPPED  {1}) as res".format(self.query, where_clause)
+
         print("-------------------")
         print("QUERY:"+self.query)
         print("ORDER:"+order_by)
         print("WHERE:"+where_clause)
         print("LIMIT:"+limit)
         print("Calculated: "+q)        # debug
+        print("Calculated Count: "+count)        # debug
 
-        count = "SELECT count(*) FROM (SELECT * FROM ({0}) AS WRAPPED  {1}) as res".format(self.query, where_clause)
 
         conn=session['engine']
 
@@ -194,13 +197,14 @@ class DataReport:
             for row in rows:
                 total_records = row[0]
                 results.count = row[0]
-        except:
+        except exc.SQLAlchemyError as e:
+            print( str(e) )
             results.msg="Error"
             return results
 
 
         records=conn.execute(q)
-        
+        returned_length=rows.rowcount
         
         for row in records:
             results.add_record(row, self)
@@ -218,7 +222,7 @@ class DataReport:
         results.stats.comments = None
         results.stats.page = page
         results.stats.page_length = record_length
-        results.stats.returned = len(records)
+        results.stats.returned = returned_length
         results.stats.pages = pages
         results.stats.record_start = start_index
         results.stats.record_end = start_index+results.stats.returned-1
@@ -227,5 +231,6 @@ class DataReport:
         results.stats.load_start = None
         results.stats.load_end = None
         results.stats.properties = self.properties
+
 
         return results

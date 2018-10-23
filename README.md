@@ -98,3 +98,9 @@ os.environ['DATA_REPORT_DB_NAME']='datareports_test'
 if __name__ == "__main__":
     app.run()
 ```
+
+
+
+## Demo
+![Demo](https://raw.githubusercontent.com/chris17453/datareports/master/datareports-demo.gif)
+

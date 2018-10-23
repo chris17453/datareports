@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='datareports',
-    version='1.1.67',
+    version='1.1.71',
     packages=['datareports',],
     include_package_data=True,
     url='https://github.com/chris17453/datareports/',
@@ -18,6 +18,7 @@ setup(
         'flask',
         'sqlalchemy',
         'pyyaml',
+        'pymysql',
         'jsonpickle',
     ],
 

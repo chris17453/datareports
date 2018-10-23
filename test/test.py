@@ -22,18 +22,18 @@ data_report_configs['example_data_report']={
         'active'       : True,
         'query'        : """SELECT  `id`,`first`,`last`,`item`,`cost`,`loc` FROM `example_table` """,
         'properties':[
-            { 'name': 'id'      , 'display': 'id'      ,'ordinal': 0, 'visible': True , 'search': True , 'multi_search': True , 'sortable': True , 'default_sort': True , 'default_sort_asc': True , 'default_sort_ordinal': 0, 'width': 200 },
-            { 'name': 'first'   , 'display': 'First'   ,'ordinal': 1, 'visible': False, 'search': True , 'multi_search': True , 'sortable': True , 'default_sort': False, 'default_sort_asc': False, 'default_sort_ordinal': 0, 'width': 100 },
-            { 'name': 'last'    , 'display': 'Last'    ,'ordinal': 2, 'visible': False, 'search': True , 'multi_search': True , 'sortable': True , 'default_sort': False, 'default_sort_asc': False, 'default_sort_ordinal': 0, 'width': 100 },
-            { 'name': 'item'    , 'display': 'Item'    ,'ordinal': 3, 'visible': False, 'search': True , 'multi_search': True , 'sortable': True , 'default_sort': False, 'default_sort_asc': False, 'default_sort_ordinal': 0, 'width': 100 },
-            { 'name': 'cost'    , 'display': 'Cost'    ,'ordinal': 4, 'visible': True , 'search': True , 'multi_search': True , 'sortable': True , 'default_sort': False, 'default_sort_asc': False, 'default_sort_ordinal': 0, 'width': 50  },
-            { 'name': 'loc'     , 'display': 'Location','ordinal': 5, 'visible': True , 'search': True , 'multi_search': True , 'sortable': True , 'default_sort': False, 'default_sort_asc': False, 'default_sort_ordinal': 0, 'width': 50  },
+            { 'name': 'id'      , 'display': 'id'      ,'ordinal': 0, 'visible': False, 'search': False , 'multi_search': False, 'sortable': True , 'default_sort': True , 'default_sort_asc': True , 'default_sort_ordinal': 0, 'width': 200 },
+            { 'name': 'first'   , 'display': 'First'   ,'ordinal': 1, 'visible': True , 'search': True  , 'multi_search': True , 'sortable': True , 'default_sort': False, 'default_sort_asc': False, 'default_sort_ordinal': 0, 'width': 100 },
+            { 'name': 'last'    , 'display': 'Last'    ,'ordinal': 2, 'visible': True , 'search': True  , 'multi_search': True , 'sortable': True , 'default_sort': False, 'default_sort_asc': False, 'default_sort_ordinal': 0, 'width': 100 },
+            { 'name': 'item'    , 'display': 'Item'    ,'ordinal': 3, 'visible': True , 'search': True  , 'multi_search': True , 'sortable': True , 'default_sort': False, 'default_sort_asc': False, 'default_sort_ordinal': 0, 'width': 100 },
+            { 'name': 'cost'    , 'display': 'Cost'    ,'ordinal': 4, 'visible': True , 'search': True  , 'multi_search': True , 'sortable': True , 'default_sort': False, 'default_sort_asc': False, 'default_sort_ordinal': 0, 'width': 50  },
+            { 'name': 'loc'     , 'display': 'Location','ordinal': 5, 'visible': True , 'search': True  , 'multi_search': True , 'sortable': True , 'default_sort': False, 'default_sort_asc': False, 'default_sort_ordinal': 0, 'width': 50  },
         ] }
  
 #set environment variables for DB
 os.environ['DATA_REPORT_DB_USER']='datareports_user'
 os.environ['DATA_REPORT_DB_PASS']='datareports_password'
-os.environ['DATA_REPORT_DB_HOST']='localhost:3305'
+os.environ['DATA_REPORT_DB_HOST']='127.0.0.1:3305'
 os.environ['DATA_REPORT_DB_NAME']='datareports_test'
 
 if __name__ == "__main__":
