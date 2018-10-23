@@ -1,9 +1,9 @@
 import os
-from data_report_record import DataReportRecord
-from data_report_property import DataReportProperty
-from data_report_stats import DataReportStats
-from data_report_results import DataReportResults
-import db
+from .data_report_record import DataReportRecord
+from .data_report_property import DataReportProperty
+from .data_report_stats import DataReportStats
+from .data_report_results import DataReportResults
+from . import db
 from sqlalchemy import exc
 
 
