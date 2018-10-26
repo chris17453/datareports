@@ -11,10 +11,9 @@ from flask import current_app, g
 from flask.cli import with_appcontext
 
 logging.basicConfig()
-logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+#logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
-def connect():
-    missing_vars=False
+def connect(host=None,db=None,user=None,password=None):
     #env_vars={'DATA_REPORT_DB_HOST','DATA_REPORT_DB_PASS','DATA_REPORT_DB_NAME','DATA_REPORT_DB_USER'}
     #for env_var in env_vars:
     #    if None is os.environ.get(env_var):
@@ -24,12 +23,20 @@ def connect():
     #if True == missing_vars:
     #    return None
 
-    mysql_config = {
-        'user'     : os.environ.get('DATA_REPORT_DB_USER') ,
-        'password' : os.environ.get('DATA_REPORT_DB_PASS') ,
-        'host'     : os.environ.get('DATA_REPORT_DB_HOST') ,
-        'database' : os.environ.get('DATA_REPORT_DB_NAME') 
-    }
+    if None != db and None != user and None != password and None != host:
+        mysql_config = {
+            'user'     : user,
+            'password' : password,
+            'host'     : host,
+            'database' : db
+        }
+    else:
+        mysql_config = {
+            'user'     : os.environ.get('DATAREPORTS_DB_USER') ,
+            'password' : os.environ.get('DATAREPORTS_DB_PASS') ,
+            'host'     : os.environ.get('DATAREPORTS_DB_HOST') ,
+            'database' : os.environ.get('DATAREPORTS_DB_NAME') 
+        }
 
     connect_string = "mysql+pymysql://{}:{}@{}/{}?charset=utf8mb4".format( mysql_config['user'],
                                                                            mysql_config['password'],
@@ -43,9 +50,9 @@ def connect():
     return {'session':session,'engine':engine}
 
 
-def get_db(app):
+def get_db(app,host=None,db=None,user=None,password=None):
     if 'db' not in g:
-        g.db =connect()
+        g.db =connect(host,db,user,password)
     return g.db
 
 

@@ -1,9 +1,9 @@
 import os
-from .data_report_record import DataReportRecord
-from .data_report_property import DataReportProperty
-from .data_report_stats import DataReportStats
-from .data_report_results import DataReportResults
-from . import db
+from data_report_record import DataReportRecord
+from data_report_property import DataReportProperty
+from data_report_stats import DataReportStats
+from data_report_results import DataReportResults
+import db
 from sqlalchemy import exc
 
 
@@ -117,6 +117,72 @@ class DataReport:
         temp_ordinals =[x for x in temp_ordinals if x != -1]
         temp_ordinals.sort()
         self.property_ordinals=temp_ordinals
+        
+
+    def MysqlDataTypes(self,type_int):
+        types = {
+            16   : "MYSQL_TYPE_BIT" ,
+            252  : "MYSQL_TYPE_BLOB" ,
+            10   : "MYSQL_TYPE_DATE" ,
+            12   : "MYSQL_TYPE_DATETIME" ,
+            0    : "MYSQL_TYPE_DECIMAL" ,
+            5    : "MYSQL_TYPE_DOUBLE" ,
+            247  : "MYSQL_TYPE_ENUM" ,
+            4    : "MYSQL_TYPE_FLOA" ,
+            255  : "MYSQL_TYPE_GEOMETRY" ,
+            9    : "MYSQL_TYPE_INT24" ,
+            3    : "MYSQL_TYPE_LONG" ,
+            8    : "MYSQL_TYPE_LONGLONG" ,
+            251  : "MYSQL_TYPE_LONG_BLOB" ,
+            250  : "MYSQL_TYPE_MEDIUM_BLOB" ,
+            14   : "MYSQL_TYPE_NEWDATE" ,
+            246  : "MYSQL_TYPE_NEWDECIMAL" ,
+            6    : "MYSQL_TYPE_NULL" ,
+            248  : "MYSQL_TYPE_SET" ,
+            2    : "MYSQL_TYPE_SHORT" ,
+            254  : "MYSQL_TYPE_STRING" ,
+            11   : "MYSQL_TYPE_TIME" ,
+            7    : "MYSQL_TYPE_TIMESTAMP" ,
+            1    : "MYSQL_TYPE_TINY" ,
+            249  : "MYSQL_TYPE_TINY_BLOB" ,
+            15   : "MYSQL_TYPE_VARCHAR" ,
+            253  : "MYSQL_TYPE_VAR_STRING" ,
+            13   : "MYSQL_TYPE_YEA" 
+        }
+
+        return types.get(int(type_int),"nothing")
+
+    def pre_configure(self,db,query,name=None,uid=None):
+        session=db
+        conn=session['session']
+        query_wrapper="""
+        CREATE TEMPORARY TABLE IF NOT EXISTS `temp` AS ({}); 
+       """.format(query)
+        rows=None
+        try:
+            
+
+            rows=conn.execute(query_wrapper)
+            rows=conn.execute("DESCRIBE `temp`")
+            rows=rows._cursor_description()
+            for ordinal,meta in enumerate(rows):
+                print("Column {}:".format(ordinal))
+                desc = meta
+                print("  column_name = {}".format(desc[0]))
+                print("  Type = {}--{}".format(desc[1],self.MysqlDataTypes(desc[1])))
+                print("  Default = {}".format(desc[2]))
+                print("  Precision1 = {}".format(desc[3]))
+                print("  Precision2 = {}".format(desc[4]))
+                print("  x = {}".format(desc[5]))
+                print(" Null = {}".format(desc[6]))
+
+                
+                
+        except exc.SQLAlchemyError as e:
+            print( "DB Error:",str(e) )
+            return None
+        return rows
+        
         
 
     def fetch(self, app, request):

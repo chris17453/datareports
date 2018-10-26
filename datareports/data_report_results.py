@@ -1,6 +1,6 @@
 
-from .data_report_stats import DataReportStats
-from .data_report_record import DataReportRecord
+from data_report_stats import DataReportStats
+from data_report_record import DataReportRecord
 
 class DataReportResults:
     """paginated, queried, sorted data with structure ans statisics"""

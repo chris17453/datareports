@@ -31,10 +31,10 @@ data_report_configs['example_data_report']={
         ] }
  
 #set environment variables for DB
-os.environ['DATA_REPORT_DB_USER']='datareports_user'
-os.environ['DATA_REPORT_DB_PASS']='datareports_password'
-os.environ['DATA_REPORT_DB_HOST']='127.0.0.1:3305'
-os.environ['DATA_REPORT_DB_NAME']='datareports_test'
+os.environ['DATAREPORTS_DB_USER']='datareports_user'
+os.environ['DATAREPORTS_DB_PASS']='datareports_password'
+os.environ['DATAREPORTS_DB_HOST']='127.0.0.1:3305'
+os.environ['DATAREPORTS_DB_NAME']='datareports_test'
 
 if __name__ == "__main__":
     app.run()
