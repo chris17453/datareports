@@ -13,6 +13,8 @@ class DataReportResults:
     def add_record(self, record, results):
         r = DataReportRecord()
         index = 0
+        #print results.properties
+        #print record
         for c in record:
             if True == results.properties[index].visible:
                 r.add_data(c)

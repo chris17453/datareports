@@ -8,6 +8,13 @@ from data_report_config import load_yaml
 data_report_configs={}
 api = Blueprint('data_reports_api', __name__, template_folder='templates')
 
+def get_db_type():
+    try:
+        db_type=os.environ['DATAREPORTS_DB_TYPE']
+    except:
+        db_type=None
+        pass
+    return db_type
 
 def get_data_report_config_from_post_uid():
     """Return the dict containing the Data Report Configuration based off of the Post variable UID, which is loaded by the client python package"""
@@ -36,7 +43,7 @@ def config():
     #   load_yaml(file)
 
     if None is not report:
-        ds=DataReport(json=report)
+        ds=DataReport(json=report,db_type=get_db_type())
         json_data = jsonpickle.encode(ds, unpicklable=False)
         return json_data
     else:
@@ -49,7 +56,7 @@ def fetch():
     req_data= request.get_json()
     report=get_data_report_config_from_post_uid()
     if None is not report:
-        ds        = DataReport(json=report)
+        ds        = DataReport(json=report,db_type=get_db_type())
         results   = ds.fetch(request=req_data,app=api)
         json_data = jsonpickle.encode(results, unpicklable=False)
         return json_data

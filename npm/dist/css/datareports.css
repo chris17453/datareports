@@ -15,7 +15,9 @@
     background-color: green;
     color: white;
   }
-  
+  .tablesorter td span{
+      cursor: pointer;
+  }
    .pager-nowrap{
       white-space: nowrap;
       

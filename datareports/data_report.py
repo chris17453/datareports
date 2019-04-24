@@ -5,11 +5,12 @@ from data_report_stats import DataReportStats
 from data_report_results import DataReportResults
 import db
 from sqlalchemy import exc
-
+import ddb
 
 class DataReport:
-    def __init__(self,json=None, name='Rep1', display='Rep1', entity='UNK', group='GRP', ordinal=0, uid='uid1', multi_search=False, active=True, query=''):
+    def __init__(self,json=None, name='Rep1', display='Rep1', entity='UNK', group='GRP', ordinal=0, uid='uid1', multi_search=False, active=True, query='',db_type=None):
         if None != json:
+            self.db_type      =db_type
             self.name         = json['name']
             self.display      = json['display']
             self.entity       = json['entity']
@@ -153,6 +154,7 @@ class DataReport:
         return types.get(int(type_int),"nothing")
 
     def pre_configure(self,db,query,name=None,uid=None):
+        
         session=db
         conn=session['session']
         query_wrapper="""
@@ -187,9 +189,9 @@ class DataReport:
 
     def fetch(self, app, request):
         results = DataReportResults()
-        session=db.get_db(app)
-        
-        print(session)
+        if self.db_type!='ddb':
+            session=db.get_db(app)
+            # print(session)
         
         page = request['page']
         record_length = request['page_length']
@@ -219,22 +221,22 @@ class DataReport:
             for i in request['filter']:
                 if i[0] < len(self.properties):
                     where_and.append(
-                        "`"+self.properties[i[0]].name+"`"+" LIKE '"+i[1]+"%%' ")
+                        "`"+self.properties[i[0]].name+"`"+" LIKE '"+i[1]+"%' ")
 
         if "" != request['multi_search']:
             for p in self.properties:
                 if True == p.multi_search:
                     where.append("`"+p.name+"`"+" LIKE '" +
-                                 request['multi_search']+"%%' ")
+                                 request['multi_search']+"%' ")
 
         if 0 < len(where) or  0< len(where_and):
             if 0 < len(where):
-                where_clause +="("+" OR ".join(where)+") "
+                where_clause +=""+" OR ".join(where)+" "
                 
             if 0< len(where_and):
                 if len(where_clause) > 0:
                     where_clause +=" AND "
-                where_clause += "("+"AND".join(where_and)+")"
+                where_clause += " "+"AND ".join(where_and)+" "
             where_clause = "WHERE "+where_clause
         else:
             where_clause = ""
@@ -247,33 +249,39 @@ class DataReport:
 
         count = "SELECT count(*) FROM (SELECT * FROM ({0}) AS WRAPPED  {1}) as res".format(self.query, where_clause)
 
-        print("-------------------")
-        print("QUERY:"+self.query)
-        print("ORDER:"+order_by)
-        print("WHERE:"+where_clause)
-        print("LIMIT:"+limit)
-        print("Calculated: "+q)        # debug
-        print("Calculated Count: "+count)        # debug
+        #print("-------------------")
+        #print("QUERY:"+self.query)
+        #print("ORDER:"+order_by)
+        #print("WHERE:"+where_clause)
+        #print("LIMIT:"+limit)
+        #print("Calculated: "+q)        # debug
+        #print("Calculated Count: "+count)        # debug
 
-
-        conn=session['engine']
-
-        try:
-            rows=conn.execute(count)
-            for row in rows:
-                total_records = row[0]
-                results.count = row[0]
-        except exc.SQLAlchemyError as e:
-            print( str(e) )
-            results.msg="Error"
-            return results
-
-
-        records=conn.execute(q)
-        returned_length=rows.rowcount
+        if self.db_type!='ddb':
+            conn=session['engine']
+            try:
+                rows=conn.execute(count)
+                for row in rows:
+                    total_records = row[0]
+                    results.count = row[0]
+            except exc.SQLAlchemyError as e:
+                print( str(e) )
+                results.msg="Error"
+                return results
+            records=conn.execute(q)
+            returned_length=rows.rowcount
+        else:
+            q = """{0} {1} {2} {3}""".format(self.query,where_clause, order_by, limit)
+            print (q)
+            engine=ddb.engine()
+            query_results=engine.query(q)
+            #print query_results.data
+            total_records=10
+            records=query_results.data
+            returned_length=query_results.data_length
         
         for row in records:
-            results.add_record(row, self)
+            results.add_record(row['data'], self)
         
         pages = total_records/record_length
         if type(pages) is float:

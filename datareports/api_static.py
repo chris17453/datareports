@@ -9,5 +9,11 @@ def index():
 
 #Non api related calls
 @api.route('/node_modules/<path:path>')
+def send_dr_js(path):
+    return send_from_directory('npm/node_modules/', path)
+
+#Non api related calls
+@api.route('/datareports/<path:path>')
 def send_js(path):
-    return send_from_directory('node_modules', path)
+    return send_from_directory('npm/', path)
+

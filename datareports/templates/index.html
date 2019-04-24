@@ -10,24 +10,61 @@
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/node_modules/tablesorter/dist/css/theme.bootstrap_4.min.css">
     <script src="/node_modules/@fortawesome/fontawesome-free/css/all.min.css"></script>
-    <link rel="stylesheet" href="/node_modules/datareports/dist/css/datareports.css" />
+    <link rel="stylesheet" href="/datareports/dist/css/datareports.css" />
 	<style>
 	</style>
 </head>
 <body>
-
-
     <div class="container-fluid">
       <div class="row">
-        <main role="main" class="col-md-10 col-lg-10 mx-auto pt-5 px-4">
+        <main role="main" class="col-md-10 col-lg-10 mx-auto pt-2 px-3" style="background: cornflowerblue; color:black">
           <div class="data-report-message"></div>
-          <h2 class="data-report-heading"></h2>
+          <div>
+            <div class='float-left'>
+                <h2 class="data-report-heading" style="color:white"></h2>
+            </div>
+            <div class='float-right'>
+            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#edit_record" id="edit-button">New Record</button>
+            </div>
+          </div>
           <!-- all the magic happens here -->
           <div class="data-report-example table-responsive"></div>
         </main>
       </div>
     </div>
 	
+  <!-- Modal -->
+  <style>
+      .mod_w{
+        width:120px;
+      } 
+      .modal-lg {
+         max-width: 80%;
+      }
+      </style>
+   <div class="modal fade" id="edit_record" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content ">
+        <div class="modal-header" style="display:block">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id='edit-header'>Create a new record</h4>
+        </div>
+        <div class="modal-body" >
+            <div id="edit-body">
+
+            </div>
+            <div id='edit-footer'>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 	
   <script src="/node_modules/@fortawesome/fontawesome-free/js/all.js"></script>
   <script src="/node_modules/jquery/dist/jquery.min.js"></script>
@@ -37,7 +74,7 @@
   <script src="/node_modules/tablesorter/dist/js/extras/jquery.tablesorter.pager.min.js"></script>
   <script src="/node_modules/tablesorter/dist/js/jquery.tablesorter.widgets.min.js"></script>
   
-  <script src="/node_modules/datareports/dist/js/datareports.js"></script>
+  <script src="/datareports/dist/js/datareports.js"></script>
   		
 	<script>
 	   $(".data-report-example").datareports({'uid':'example_data_report'});

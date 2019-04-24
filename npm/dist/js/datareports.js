@@ -217,10 +217,73 @@
             </table>
 			${pagination}`).appendTo(this.element);
             $(".data-report-heading").html(this.data_config.display);
-            this.init_tablesorter();
-	    }
+			this.init_tablesorter();
+			$(`.${this.tablesorter_table}`).dblclick(function(e){
+				found=0
+				parent=e.target;
+				if(parent.tagName=="SPAN"){
+					parent=parent.parentElement;
+				} 
+				if(parent.tagName=="TD"){
+					parent=parent.parentElement;
+					found=1
+				} 
+
+				if (found===0) return;
+					$('#edit_record').modal('show');
+					o=""
+					form_html=''
+					for(i=0;i<parent.children.length;i++){
+						value=parent.children[i].textContent;
+						display=this.config.headerContent[i]
+						form_html+=`<div class="input-group mb-2 mr-sm-2">
+						<div class="input-group-prepend ">
+						  <div class="input-group-text mod_w">${display}</div>
+						</div>
+						<input type="text" class="form-control" id="${display}" placeholder="or sort of info" value='${value}'>
+						</div>`;
+					}
+					$('#edit-body').html(form_html)
+					footer=`
+					<div class="float-left">
+					  <button type="submit" class="btn btn-danger my-1">Delete</button>
+				    </div>
+				    <div class="float-right">
+				      <button type="submit" class="btn btn-warning my-1">Update</button>
+				    </div>`
+				  $('#edit-footer').html(footer);
+				  $('#edit-header').html("Update Record");
+			});
+
+			$(`#edit-button`).click(function(e){
+				parent=$(`.tablesorter`)[0]
+				form_html=''
+				for(i in parent.config.headerContent){
+					display=parent.config.headerContent[i]
+					form_html+=`<div class="input-group mb-2 mr-sm-2">
+					<div class="input-group-prepend ">
+					<div class="input-group-text mod_w">${display}</div>
+					</div>
+					<input type="text" class="form-control" id="${display}" placeholder="${display} or some sort of info">
+					</div>`;
+				}
+				$('#edit-body').html(form_html);
+				footer=`'<div class="float-right">
+				<button type="submit" class="btn btn-primary my-1">Insert</button>
+				</div>`
+				$('#edit-footer').html(footer);
+				footer=`'<div class="float-right">
+				<button type="submit" class="btn btn-primary my-1">Insert</button>
+				</div>`
+				$('#edit-header').html("Create Record")
+			});
+		}
+		
         datareports.prototype.bind=function (){
-            var self=this;
+			return this.data.config.properties;
+		}
+			datareports.prototype.bind=function (){
+				var self=this;
             $(this.element).on("remove",$.proxy(this.destroy, this)); //listen for a kill "this plugin" event 
 			//$(this.element).on("change",".browsy-show-hidden-folders" ,function(e) {  self.refresh(); });
 			
@@ -605,7 +668,7 @@
 				cssErrorRow         : 'tablesorter-errorRow',
 				parent_self         : this,
                 no_results_msg      : this.options.no_results_msg
-				});
+				})
 		}//end if
 	    datareports.prototype.obj_to_string=function(obj){
             return  JSON.stringify(obj);
@@ -618,7 +681,8 @@
     //********************************************************************************************
     // Extend tablesorter to give messages for no results found
     //*******************************************************************************************
-    var ts = $.tablesorter;
+	var ts = $.tablesorter;
+	
     ts.showInfo= function( table,msg) {
         var $row,
             $table = $( table ),
