@@ -19,7 +19,7 @@ fi
 
 echo "Build the package"
 python setup.py sdist
-
+ 
 echo "Upload the package"
 twine upload  dist/*
 
